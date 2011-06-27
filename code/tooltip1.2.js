@@ -32,8 +32,8 @@
                               offsetX: 0,
                               domNode: false,
                               ajax: false,
-                              staticTool: true,
-                              staticPos: 'bottom'
+                              staticTool: false,
+                              staticPos: 'right'
 					};
 
 		// if settings have been defined then overwrite the default ones
