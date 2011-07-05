@@ -1,0 +1,13 @@
+Tooltip Plugin options and revisions
+
+Settings:
+toolID   - string;    This is the custom ID for the tool tip. Used to create different styles for each tooltip on the page
+offsetY  - integer;   This is the vertical offest of the tooltip from the mouse position
+offsetX  - integer;   This is the horizontal offest of the tooltip from the mouse position
+domNode  - boolean;   If true then it will look for a DOM node to inject into the tooltip
+ajax     - boolean;   If true then it will look for an external resource and inject that content into the tooltip
+
+version 1.1 - 	added option to make the tooltip static over the content
+  				staticTool - true or false
+  				staticPos - top, bottom, left, right
+version 1.2 	- fixed the timeout issue when elements are using the same tooltip ID
