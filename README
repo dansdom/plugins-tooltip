@@ -10,4 +10,4 @@ ajax     - boolean;   If true then it will look for an external resource and inj
 version 1.1 - 	added option to make the tooltip static over the content
   				staticTool - true or false
   				staticPos - top, bottom, left, right
-version 1.2 	- fixed the timeout issue when elements are using the same tooltip ID
+version 1.2 	- fixed the timeout issue when elements are using the same tooltip ID.
