@@ -17,15 +17,30 @@
 	<link rel="stylesheet" href="css/style.css" type="text/css" media="screen, projection" />
 	    <!-- Javascripts -->
     <script language="javascript" type="text/javascript" src="js/jquery.js"></script>
-    <script language="javascript" type="text/javascript" src="js/tooltip.min.js"></script>
+    <script language="javascript" type="text/javascript" src="js/tooltip1.4.js"></script>
     <script language="javascript" type="text/javascript">
     		$(document).ready(function(){
-    		            $(".box1").tooltip({staticTool:true,staticPos: 'left'});
-    		            $(".box2").tooltip({domNode:true,staticTool:true,staticPos: 'top',offsetY:-10,offsetX:10});
+    		            var mybox1 = $(".box1").tooltip({staticTool:true,staticPos: 'left'});
+    		            
+    		            var mybox2 = $(".box2").tooltip({domNode:true,staticTool:true,staticPos: 'top',offsetY:-10,offsetX:10});
+    		            
     		            $(".box3").tooltip({ajax:true,staticTool:true,staticPos: 'right'});
     		            $(".box4").tooltip({staticTool:true,staticPos: 'bottom'});
     		            $(".box5").tooltip({toolID:'tooltip2',staticTool:false,offsetY:3,offsetX:3});
     		            $(".inputField").tooltip({toolID:'tooltip4',staticTool:true,offsetY:3,offsetX:3,focusEvent:true});
+						$(".destroy5").click(function(){
+								$(".box5").tooltip("destroy");
+						});
+						$(".change4").click(function(){
+								$(".box4").tooltip({staticTool:false});
+						});
+						$(".revert4").click(function(){
+								$(".box4").tooltip({staticTool:true});
+						});
+						$(".show4").click(function(){
+								$(".box4").tooltip("showTip");
+						});
+						
 			});
     </script>
     <style type="text/css">
@@ -40,14 +55,20 @@
       <div id="wrap">
       
       		<h1>Tooltip Plugin</h1>
-
-      	   <div class="box1" title="<h2>Tooltip 1</h2><p>This is the content for box 1 tooltip</p>"><h2>Box 1</h2><p>Inline DOM node with static position left</p></div>
+					
+      	   <div class="box1 box1a" style="margin-right:100px" title="<h2>Tooltip 1a</h2><p>This is the content for box 1a tooltip</p>"><h2>Box 1</h2><p>Inline DOM node with static position left</p></div>
+      	   
+      	   <div class="box1 box1b" title="<h2>Tooltip 1b</h2><p>This is the content for box 1b tooltip</p>"><h2>Box 1</h2><p>Inline DOM node with static position left</p></div>
       	   <div class="box2" title="#box2"><h2>Box 2</h2>Using a DOM node selector for content, positioned "top" and an offset of -10px, 10px</div>
       	   <div class="box3" title="ajax.html"><h2>Box 3</h2>Ajax response from ajax.html with static position right</div>
       	   <div class="box4" title="<h2>Toolip 4</h2><p>This is the content for box 4 tooltip</p>"><h2>Box 4</h2>Normal box with static position bottom</div>
       	   <div class="box5" title="<h2>Tooltip 5</h2><p>This tooltip has a different ID so it can be styled differently</p>"><h2>Box 5</h2>Tooltip using different tooltip box ID for different styling and static position: false</div>
       	   
       	   <input class="inputField" type="text" size="20" placeholder="some text here" title="<p>put some words in mate!</p>" />
+		   <input type="button" class="destroy5" value="remove box 5 tooltip" />
+		   <input type="button" class="change4" value="make 4 not static" />
+		   <input type="button" class="revert4" value="make 4 static" />
+		   <input type="button" class="show4" value="show tooltip of box 4" />
       	   
       	   <!-- wrapping div to hide the tooltip content -->
       	   <div style="display:none">
