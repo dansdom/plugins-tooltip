@@ -28,6 +28,7 @@
     		            $(".box4").tooltip({staticTool:true,staticPos: 'bottom'});
     		            $(".box5").tooltip({toolID:'tooltip2',staticTool:false,offsetY:3,offsetX:3});
     		            $(".inputField").tooltip({toolID:'tooltip4',staticTool:true,offsetY:3,offsetX:3,focusEvent:true});
+						
 						$(".destroy5").click(function(){
 								$(".box5").tooltip("destroy");
 						});
@@ -38,6 +39,25 @@
 								$(".box4").tooltip({staticTool:true});
 						});
 						$(".show4").click(function(){
+								$(".box4").tooltip("showTip");
+						});
+						$(".hide4").click(function(){
+								$(".box4").tooltip("hideTip");
+						});
+						$(".showL").click(function(){
+								$(".box4").tooltip({"staticPos":"left"});
+								$(".box4").tooltip("showTip");
+						});
+						$(".showR").click(function(){
+								$(".box4").tooltip({"staticPos":"right"});
+								$(".box4").tooltip("showTip");
+						});
+						$(".showB").click(function(){
+								$(".box4").tooltip({"staticPos":"bottom"});
+								$(".box4").tooltip("showTip", "make my content this");
+						});
+						$(".showT").click(function(){
+								$(".box4").tooltip({"staticPos":"top"});
 								$(".box4").tooltip("showTip");
 						});
 						
@@ -65,10 +85,17 @@
       	   <div class="box5" title="<h2>Tooltip 5</h2><p>This tooltip has a different ID so it can be styled differently</p>"><h2>Box 5</h2>Tooltip using different tooltip box ID for different styling and static position: false</div>
       	   
       	   <input class="inputField" type="text" size="20" placeholder="some text here" title="<p>put some words in mate!</p>" />
-		   <input type="button" class="destroy5" value="remove box 5 tooltip" />
-		   <input type="button" class="change4" value="make 4 not static" />
-		   <input type="button" class="revert4" value="make 4 static" />
-		   <input type="button" class="show4" value="show tooltip of box 4" />
+		   <div style="clear:both;padding:40px">
+				<input type="button" class="destroy5" value="remove box 5 tooltip" />
+				<input type="button" class="change4" value="make 4 not static" />
+				<input type="button" class="revert4" value="make 4 static" />
+				<input type="button" class="show4" value="show tooltip of box 4" />
+				<input type="button" class="hide4" value="hide tooltip of box 4" />
+				<input type="button" class="showL" value="show tooltip of box 4 on left" />
+				<input type="button" class="showR" value="show tooltip of box 4 on right" />
+				<input type="button" class="showT" value="show tooltip of box 4 on top" />
+				<input type="button" class="showB" value="show tooltip of box 4 on bottom" />
+		   </div>
       	   
       	   <!-- wrapping div to hide the tooltip content -->
       	   <div style="display:none">

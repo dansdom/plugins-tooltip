@@ -21,20 +21,11 @@
 
 // version 1.2 -	fixed the timeout issue when elements are using the same tooltip ID
 // version 1.3 -	added focus and blur events to the tooltip so that it can be used in forms
-// version 1.4 - 	implmented new plugin architecture: https://github.com/dansdom/plugins-template-v2
+// version 2.0 - 	implmented new plugin architecture: https://github.com/dansdom/plugins-template-v2
 
 (function ($) {
 	// this ones for you 'uncle' Doug!
 	'use strict';
-	// just a logging function to output logging without danger of breaking the script
-	var consoleLog = function(msg)
-	{
-		// turn this off for production code
-		var debugMode = true;
-		if (console && console.log && debugMode === true) {
-			console.log(msg);
-		}
-	};
 	
 	// Plugin namespace definition
 	$.Tooltip = function (options, element, callback)
@@ -165,13 +156,15 @@
 				} else {
 					el.hideTip();
 				}
-			});	
+			});
+			
+			console.log(this);
 			
 		},
 		option : function(args) {
 			this.options = $.extend(true, {}, this.options, args);
 		},
-		showTip : function() {
+		showTip : function(arg) {
 			// var toolNode = $("#"+opts.toolID);
 			// show the tool tip for the DOM element
 			// I will need to set up a DOM element to put the content of the tooltip into, and maybe set a position relative or 2
@@ -233,7 +226,6 @@
 			this.element.tool.css("display", "none");
 		},
 		destroy : function() {
-			consoleLog("unbinding namespaced events");
 			this.element.unbind("."+this.namespace);
 		}
 	};
@@ -256,12 +248,12 @@
 				
 				// if there is no data for this instance of the plugin, then the plugin needs to be initialised first, so just call an error
 				if (!pluginInstance) {
-					consoleLog("The plugin has not been initialised yet when you tried to call this method: " + options);
+					alert("The plugin has not been initialised yet when you tried to call this method: " + options);
 					return;
 				}
 				// if there is no method defined for the option being called, or it's a private function (but I may not use this) then return an error.
 				if (!$.isFunction(pluginInstance[options]) || options.charAt(0) === "_") {
-					consoleLog("the plugin contains no such method: " + options);
+					alert("the plugin contains no such method: " + options);
 					return;
 				}
 				// apply the method that has been called

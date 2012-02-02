@@ -23,4 +23,6 @@ h2 {font-size:14px;}
 .ajaxBox {padding:10px}
 .ajaxBox img {border:1px solid #ccc;margin-top:10px}
 .ajaxBox p {padding:10px 0 0;text-align:center}
+input[type="button"] {margin:10px;font-size:18px;}
+input[type="button"]:hover {background:#eee}
 

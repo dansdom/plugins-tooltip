@@ -21,7 +21,7 @@
 
 // version 1.2 -	fixed the timeout issue when elements are using the same tooltip ID
 // version 1.3 -	added focus and blur events to the tooltip so that it can be used in forms
-// version 1.4 - 	implmented new plugin architecture: https://github.com/dansdom/plugins-template-v2
+// version 2.0 - 	implmented new plugin architecture: https://github.com/dansdom/plugins-template-v2
 
 (function ($) {
 	// this ones for you 'uncle' Doug!
@@ -165,13 +165,13 @@
 				} else {
 					el.hideTip();
 				}
-			});	
+			});
 			
 		},
 		option : function(args) {
 			this.options = $.extend(true, {}, this.options, args);
 		},
-		showTip : function() {
+		showTip : function(arg) {
 			// var toolNode = $("#"+opts.toolID);
 			// show the tool tip for the DOM element
 			// I will need to set up a DOM element to put the content of the tooltip into, and maybe set a position relative or 2
