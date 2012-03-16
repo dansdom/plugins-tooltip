@@ -31,7 +31,7 @@
 	$.Tooltip = function (options, element, callback)
 	{
 		// wrap the element in the jQuery object
-		this.element = $(element);
+		this.el = $(element);
 		// this is the namespace for all bound event handlers in the plugin
 		this.namespace = "tooltip";
 		// extend the settings object with the options, make a 'deep' copy of the object using an empty 'holding' object
@@ -59,107 +59,106 @@
 	// plugin functions go here
 	$.Tooltip.prototype = {
 		init : function() {
+			
+			// going to need to define this, as there are some anonymous closures in this function.
+			var tooltip = this,
+				tool,
+				html
 				
 			// check if the tooltip exists, if not then create it and then add it to the end of the document
 			if ($("#" + this.options.toolID).length < 1) {
-				tooltip = '<div id="' + this.options.toolID + '" style="position:absolute;z-index:1000;display:none;"></div>';
-				$("body").append(tooltip);
+				tool = '<div id="' + this.options.toolID + '" style="position:absolute;z-index:1000;display:none;"></div>';
+				$("body").append(tool);
 			}
-			
-			// going to need to define this, as there are some anonymous closures in this function.
-			// something interesting to consider
-			var el = this,
-				tooltip,
-				html
 				
-			this.element.content = this.element.attr("title");
-			this.element.tool = $("#" + this.options.toolID);
-			this.element.onEl = false;
-			this.element.onFocus = false;
-			this.element.onTool = false;
+			this.el.content = this.el.attr("title");
+			this.el.tool = $("#" + this.options.toolID);
+			this.el.onEl = false;
+			this.el.onFocus = false;
+			this.el.onTool = false;
 			
 			// if the tooltip is a DOM node, then get the html that is in that selector
 			if (this.options.domNode === true) {
-				this.element.content = $(this.element.content).html();
+				this.el.content = $(this.el.content).html();
 			}
 			
 			// if the tooltip is an ajax call, then get the html from the external file
 			if (this.options.ajax === true) {
 				html = $.ajax({
-					url: this.element.content,
+					url: this.el.content,
 					async: false
 				}).responseText;
-				this.element.content = html;
+				this.el.content = html;
 			}
 			
-			this.element.attr("title", "");
-			this.element.contentHTML = this.element.attr("href");
+			this.el.attr("title", "");
+			this.el.contentHTML = this.el.attr("href");
 			
 			// putting this down below
-			this.element.bind('mousemove.' + this.namespace, function (e) {
+			this.el.bind('mousemove.' + this.namespace, function (e) {
 				// just to see where the mouse is pointing
 				var cursorX = e.pageX,
 					cursorY = e.pageY;
 				// if the cursor is following the mouse then use the mousemove function to move the tooltip around
-				if (el.options.staticTool !== true) {
-					el.element.tool.css({"top": cursorY + el.options.offsetY + "px", "left": cursorX + el.options.offsetX + "px"});
+				if (tooltip.options.staticTool !== true) {
+					tooltip.el.tool.css({"top": cursorY + tooltip.options.offsetY + "px", "left": cursorX + tooltip.options.offsetX + "px"});
 				}
 			});
 					
 			// mouseover function
-			this.element.bind('mouseover.' + this.namespace, function () {
-				el.element.onEl = true;
-				el.showTip();
+			this.el.bind('mouseover.' + this.namespace, function () {
+				tooltip.el.onEl = true;
+				tooltip.showTip();
 			});
 					
 			// mouseout function
-			this.element.bind('mouseout.' + this.namespace, function () {
-				if (el.options.focusEvent && el.element.onFocus === true) {
+			this.el.bind('mouseout.' + this.namespace, function () {
+				if (tooltip.options.focusEvent && tooltip.el.onFocus === true) {
 					return false;
 				}
-				el.element.onEl = false;
+				tooltip.el.onEl = false;
 				// if the tooltip is static then handle hiding it with a timer
-				if (el.options.staticTool === true && el.element.onTool === false) {
-					el.hideTip();
-				} else if (el.options.staticTool === true && el.element.onTool === true) {
+				if (tooltip.options.staticTool === true && tooltip.el.onTool === false) {
+					tooltip.hideTip();
+				} else if (tooltip.options.staticTool === true && tooltip.el.onTool === true) {
 					// do nothing
 					// console.log("doing nothing - on El");
 					return;
 				} else {
-					el.hideTip();
+					tooltip.hideTip();
 				}
 			});
 					
 			// adding events for focus and blur
 			if (this.options.focusEvent === true) {
-				this.element.bind('focus.' + this.namespace, function () {
-					el.element.onEl = true;
-					el.element.onFocus = true;
-					el.element.showTip();
+				this.el.bind('focus.' + this.namespace, function () {
+					tooltip.el.onEl = true;
+					tooltip.el.onFocus = true;
+					tooltip.el.showTip();
 				});
 
-				this.element.bind('blur.' + this.namespace, function () {
-					el.element.onEl = false;
-					el.element.onFocus = false;
-					el.hideTip();
+				this.el.bind('blur.' + this.namespace, function () {
+					tooltip.el.onEl = false;
+					tooltip.el.onFocus = false;
+					tooltip.hideTip();
 				});
 			}
 			
 			// if the tooltip is static then handle hiding it with a timer
-			this.element.tool.bind('mouseover.' + this.namespace, function () {
-				el.element.onTool = true;
+			this.el.tool.bind('mouseover.' + this.namespace, function () {
+				tooltip.el.onTool = true;
 			});
 						 
-			this.element.tool.bind('mouseout.' + this.namespace, function () {
-				el.element.onTool = false;
-				if (el.options.staticTool === true && el.element.onEl === false) {
-					el.hideTip();
-				} else if (el.options.staticTool === true && el.element.onEl === true) {
+			this.el.tool.bind('mouseout.' + this.namespace, function () {
+				tooltip.el.onTool = false;
+				if (tooltip.options.staticTool === true && tooltip.el.onEl === false) {
+					tooltip.hideTip();
+				} else if (tooltip.options.staticTool === true && tooltip.el.onEl === true) {
 					// do nothing
 					// console.log("doing nothing - on tool");
 					return;
 				} else {
-					el.hideTip();
+					tooltip.hideTip();
 				}
 			});
 			
@@ -171,20 +170,20 @@
 			// var toolNode = $("#"+opts.toolID);
 			// show the tool tip for the DOM element
 			// I will need to set up a DOM element to put the content of the tooltip into, and maybe set a position relative or 2
-			this.element.tool.css("display", "block");
+			this.el.tool.css("display", "block");
 			//$("#"+opts.toolID).fadeIn(200);
-			this.element.tool.html(this.element.content);
+			this.el.tool.html(this.el.content);
 
 			// if the tooltip has a static position then calculate where it goes in relation to the offset of the DOM node,
 			if (this.options.staticTool === true) {
 				// 4 cases: top, bottom, left, right
-				var elOffset = this.element.offset(),
+				var elOffset = this.el.offset(),
 					toolOffset = {},
 					// find the size of the tooltip
-					toolX = this.element.tool.outerWidth(),
-					toolY = this.element.tool.outerHeight(),
-					elX = this.element.outerWidth(),
-					elY = this.element.outerHeight();
+					toolX = this.el.tool.outerWidth(),
+					toolY = this.el.tool.outerHeight(),
+					elX = this.el.outerWidth(),
+					elY = this.el.outerHeight();
 					//console.log("height: "+toolDimensionY+", width: "+toolDimensionX);
 				switch (this.options.staticPos) {
 				case "top":
@@ -220,17 +219,16 @@
 					toolOffset.X = 0;
 				}
 
-				this.element.tool.css({"top": toolOffset.Y + "px", "left": toolOffset.X + "px"});
+				this.el.tool.css({"top": toolOffset.Y + "px", "left": toolOffset.X + "px"});
 			}
 		},
 		hideTip : function () {
 			// hide the tool tip
 			// I will need to delete the DOM element that I created to house the content of the tool tip
-			this.element.tool.css("display", "none");
+			this.el.tool.css("display", "none");
 		},
 		destroy : function() {
-			consoleLog("unbinding namespaced events");
-			this.element.unbind("."+this.namespace);
+			this.el.unbind("."+this.namespace);
 		}
 	};
 	
@@ -252,12 +250,12 @@
 				
 				// if there is no data for this instance of the plugin, then the plugin needs to be initialised first, so just call an error
 				if (!pluginInstance) {
-					consoleLog("The plugin has not been initialised yet when you tried to call this method: " + options);
+					alert("The plugin has not been initialised yet when you tried to call this method: " + options);
 					return;
 				}
 				// if there is no method defined for the option being called, or it's a private function (but I may not use this) then return an error.
 				if (!$.isFunction(pluginInstance[options]) || options.charAt(0) === "_") {
-					consoleLog("the plugin contains no such method: " + options);
+					alert("the plugin contains no such method: " + options);
 					return;
 				}
 				// apply the method that has been called
